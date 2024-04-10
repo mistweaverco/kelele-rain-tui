@@ -1,0 +1,30 @@
+builds:
+- env:
+  - CGO_ENABLED=0
+  - >-
+    {{- if eq .Os "linux" }}
+      CGO_ENABLED=1
+    {{- end }}
+  main: './src/'
+  binary: 'kelele-rain'
+  targets:
+  - >-
+    {{- if eq .Os "linux" }}
+      linux
+    {{- end }}
+    {{- if eq .Os "darwin" }}
+      darwin
+    {{- end }}
+    {{- if eq .Os "windows" }}
+      darwin
+    {{- end }}
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: '{{ .Tag }}'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
